@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pregunta bien — Describe tu problema, no tu solución</title>
+  <meta name="description" content="Estás describiendo tu solución cuando deberías describir tu problema. Una guía breve para pedir ayuda de forma efectiva en cualquier comunidad técnica." />
+  <link rel="canonical" href="https://preguntabien.com" />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://preguntabien.com" />
+  <meta property="og:title"       content="Pregunta bien." />
+  <meta property="og:description" content="Estás describiendo tu solución. Deberías describir tu problema." />
+  <meta property="og:image"       content="https://preguntabien.com/og.png" />
+  <meta property="og:locale"      content="es_ES" />
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Pregunta bien." />
+  <meta name="twitter:description" content="Estás describiendo tu solución. Deberías describir tu problema." />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%230c0c0c'/><text x='50' y='72' font-size='68' text-anchor='middle' fill='%23f05a28' font-family='Georgia,serif' font-weight='bold'>?</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #0c0c0c;
+      --surface:   #161616;
+      --border:    #272727;
+      --text:      #dedad3;
+      --muted:     #6e6a65;
+      --accent:    #f05a28;
+      --green:     #4ade80;
+      --green-dim: rgba(74,222,128,0.07);
+      --red-dim:   rgba(240,90,40,0.06);
+      --max-w:     660px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', system-ui, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 1.5rem;
+    }
+
+    .wrap { max-width: var(--max-w); margin: 0 auto; }
+
+    /* ── HEADER ──────────────────────────────── */
+    header { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+    .site-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .site-id strong { color: var(--accent); font-weight: 500; }
+
+    /* ── HERO ────────────────────────────────── */
+    .hero { padding: 5rem 0 4rem; }
+
+    .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: up 0.55s ease forwards;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(3.2rem, 10vw, 5.5rem);
+      line-height: 1.0;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: up 0.55s ease 0.1s forwards;
+    }
+    h1 em { color: var(--accent); font-style: italic; }
+
+    .hero-lead {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: up 0.55s ease 0.2s forwards;
+    }
+
+    /* ── SECTIONS ────────────────────────────── */
+    section { padding: 3.5rem 0; border-top: 1px solid var(--border); }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      line-height: 1.15;
+    }
+
+    p { color: var(--text); margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: #fff; font-weight: 500; }
+
+    /* ── FLOW ────────────────────────────────── */
+    .flow { margin: 2rem 0; display: flex; flex-direction: column; }
+
+    .flow-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .flow-row:hover { background: var(--surface); }
+
+    .flow-key {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      padding-top: 0.2rem;
+      min-width: 1.8rem;
+      flex-shrink: 0;
+    }
+    .flow-row.neutral .flow-key { color: var(--muted); }
+    .flow-val { font-size: 0.98rem; }
+    .flow-arrow {
+      padding: 0.1rem 0 0.1rem 2.9rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--border);
+    }
+
+    /* ── EXAMPLES STACK ──────────────────────── */
+    .ex-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .ex-item {
+      background: var(--bg);
+      padding: 1.25rem 1.5rem 1.4rem;
+      transition: background 0.2s;
+    }
+    .ex-item:hover { background: var(--surface); }
+
+    .ex-comm {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.9rem;
+    }
+
+    .ex-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .ex-side { display: flex; flex-direction: column; gap: 0.45rem; }
+
+    .ex-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+    .ex-y .ex-label { color: var(--muted); }
+    .ex-x .ex-label { color: var(--green); }
+
+    .ex-text {
+      font-size: 0.88rem;
+      line-height: 1.45;
+      padding: 0.6rem 0.75rem;
+      border-radius: 6px;
+    }
+    .ex-y .ex-text {
+      background: var(--red-dim);
+      color: var(--muted);
+      border: 1px solid rgba(240,90,40,0.12);
+    }
+    .ex-x .ex-text {
+      background: var(--green-dim);
+      color: var(--text);
+      border: 1px solid rgba(74,222,128,0.12);
+    }
+
+    .ex-note {
+      margin-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── STEPS ───────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 1.75rem; margin: 2rem 0; }
+    .step  { display: flex; gap: 1.5rem; align-items: flex-start; }
+
+    .step-n {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--border);
+      flex-shrink: 0;
+      min-width: 2.2rem;
+      transition: color 0.25s;
+      user-select: none;
+    }
+    .step:hover .step-n { color: var(--accent); }
+
+    .step-body h3 { font-size: 0.98rem; font-weight: 500; color: #fff; margin-bottom: 0.2rem; }
+    .step-body p  { font-size: 0.88rem; color: var(--muted); margin: 0; }
+
+    /* ── TEMPLATE ────────────────────────────── */
+    .tmpl-box {
+      background: #111;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+    .tmpl-box p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.95;
+      color: var(--text);
+      margin: 0;
+    }
+    .tmpl-box p var { color: var(--accent); font-style: normal; }
+
+    .btn-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 0.4em 0.9em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-copy:hover  { border-color: var(--accent); color: var(--accent); }
+    .btn-copy.ok     { border-color: var(--green);  color: var(--green);  }
+
+    /* ── CLOSING ─────────────────────────────── */
+    .closing { padding: 4rem 0 5rem; border-top: 1px solid var(--border); }
+
+    .closing-quote {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: clamp(1.35rem, 3.5vw, 1.9rem);
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 1rem;
+    }
+
+    .closing-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.75rem; }
+
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.7em 1.4em;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-share:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-share.ok    { background: var(--green); color: #0c0c0c; }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .foot-txt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .foot-links { display: flex; gap: 1.5rem; }
+    .foot-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .foot-link:hover { color: var(--accent); }
+
+    /* ── ANIMATIONS ──────────────────────────── */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ──────────────────────────────── */
+    @media (max-width: 580px) {
+      body    { padding: 0 1rem; }
+      .hero   { padding: 3rem 0 2.5rem; }
+      section { padding: 2.5rem 0; }
+
+      .ex-pair { grid-template-columns: 1fr; gap: 0.65rem; }
+      .ex-item  { padding: 1rem 1.1rem 1.2rem; }
+
+      .step-n { font-size: 1.8rem; min-width: 1.8rem; }
+      footer  { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="site-id">preguntabien<strong>.com</strong></span>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <div class="hero">
+      <p class="kicker">El problema XY</p>
+      <h1>Pregunta <em>bien.</em></h1>
+      <p class="hero-lead">Estás describiendo tu solución.<br>Deberías describir tu problema.</p>
+    </div>
+
+    <!-- 01 · EL PATRÓN -->
+    <section class="reveal">
+      <p class="tag">01 — El patrón</p>
+      <h2>¿Qué está pasando?</h2>
+      <p>Tienes un problema. Crees que ya sabes cómo resolverlo. Así que preguntas sobre <strong>tu solución</strong>, no sobre <strong>tu problema</strong>. Nadie puede ayudarte con lo que realmente necesitas porque no saben que existe.</p>
+
+      <div class="flow">
+        <div class="flow-row">
+          <span class="flow-key">X</span>
+          <span class="flow-val">Tienes un problema real que resolver.</span>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-row">
+          <span class="flow-key">Y</span>
+          <span class="flow-val">Decides que la solución es Y. Quizás lo es. Quizás no.</span>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-row neutral">
+          <span class="flow-key">❓</span>
+          <span class="flow-val">Preguntas <em>solo</em> sobre Y. Nadie sabe que X existe.</span>
+        </div>
+      </div>
+
+      <p>El resultado: recibes respuestas a algo que puede que no sea tu problema. O silencio total, porque nadie entiende qué necesitas realmente.</p>
+      <p>Este patrón tiene nombre: <strong>el Problema XY</strong>. Y ocurre en todas las disciplinas técnicas.</p>
+    </section>
+
+    <!-- 02 · ¿LO RECONOCES? -->
+    <section class="reveal">
+      <p class="tag">02 — ¿Lo reconoces?</p>
+      <h2>Pasa en todas partes.</h2>
+
+      <div class="ex-stack">
+
+        <div class="ex-item">
+          <p class="ex-comm">Infraestructura / Sysadmin</p>
+          <div class="ex-pair">
+            <div class="ex-side ex-y">
+              <span class="ex-label">Lo que preguntas</span>
+              <span class="ex-text">"¿Cómo termino un proceso por nombre automáticamente en Linux?"</span>
+            </div>
+            <div class="ex-side ex-x">
+              <span class="ex-label">Lo que necesitas</span>
+              <span class="ex-text">"El servidor se queda sin memoria cada pocas horas y no sé por qué."</span>
+            </div>
+          </div>
+          <p class="ex-note">Matar el proceso es un parche. La fuga de memoria es el problema.</p>
+        </div>
+
+        <div class="ex-item">
+          <p class="ex-comm">Datos / Analytics</p>
+          <div class="ex-pair">
+            <div class="ex-side ex-y">
+              <span class="ex-label">Lo que preguntas</span>
+              <span class="ex-text">"¿Cómo elimino filas duplicadas en esta consulta SQL?"</span>
+            </div>
+            <div class="ex-side ex-x">
+              <span class="ex-label">Lo que necesitas</span>
+              <span class="ex-text">"Mi reporte de ventas está contando el mismo cliente varias veces."</span>
+            </div>
+          </div>
+          <p class="ex-note">Quizás los duplicados son correctos y el problema está en el JOIN.</p>
+        </div>
+
+        <div class="ex-item">
+          <p class="ex-comm">Diseño / UX</p>
+          <div class="ex-pair">
+            <div class="ex-side ex-y">
+              <span class="ex-label">Lo que preguntas</span>
+              <span class="ex-text">"¿Cómo hago que el botón principal sea más grande?"</span>
+            </div>
+            <div class="ex-side ex-x">
+              <span class="ex-label">Lo que necesitas</span>
+              <span class="ex-text">"Los usuarios no encuentran la acción principal en la pantalla."</span>
+            </div>
+          </div>
+          <p class="ex-note">El tamaño puede no ser el problema. El contraste, la posición o el texto también importan.</p>
+        </div>
+
+        <div class="ex-item">
+          <p class="ex-comm">Redes / Networking</p>
+          <div class="ex-pair">
+            <div class="ex-side ex-y">
+              <span class="ex-label">Lo que preguntas</span>
+              <span class="ex-text">"¿Cómo bloqueo el tráfico en el puerto 8080 en el firewall?"</span>
+            </div>
+            <div class="ex-side ex-x">
+              <span class="ex-label">Lo que necesitas</span>
+              <span class="ex-text">"Hay tráfico saliente inusual desde una máquina de la red interna."</span>
+            </div>
+          </div>
+          <p class="ex-note">Bloquear el puerto no te dice de dónde viene el tráfico ni por qué.</p>
+        </div>
+
+        <div class="ex-item">
+          <p class="ex-comm">Soporte técnico</p>
+          <div class="ex-pair">
+            <div class="ex-side ex-y">
+              <span class="ex-label">Lo que preguntas</span>
+              <span class="ex-text">"¿Cómo desinstalo y reinstalo la aplicación por completo?"</span>
+            </div>
+            <div class="ex-side ex-x">
+              <span class="ex-label">Lo que necesitas</span>
+              <span class="ex-text">"La aplicación falla al guardar archivos, pero no siempre. No sé cuándo ocurre."</span>
+            </div>
+          </div>
+          <p class="ex-note">Reinstalar puede resolver el síntoma. El patrón de fallo es la pista real.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 03 · CÓMO PREGUNTAR -->
+    <section class="reveal">
+      <p class="tag">03 — La solución</p>
+      <h2>Cómo pedir ayuda de verdad</h2>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-n">1</span>
+          <div class="step-body">
+            <h3>Explica qué intentas lograr</h3>
+            <p>El objetivo final, no el plan para llegar. Cuéntanos el X, no el Y.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">2</span>
+          <div class="step-body">
+            <h3>Comparte qué intentaste y qué pasó</h3>
+            <p>Qué hiciste, qué obtuviste, qué esperabas. Contexto real, no suposiciones.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">3</span>
+          <div class="step-body">
+            <h3>Si tienes una idea, dila — como contexto</h3>
+            <p>Está bien mencionar tu solución propuesta. Solo no hagas de ella toda la pregunta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">4</span>
+          <div class="step-body">
+            <h3>Incluye el error o comportamiento exacto</h3>
+            <p>Copia el mensaje de error. Describe lo que pasa. No lo parafrasees.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · LA PLANTILLA -->
+    <section class="reveal">
+      <p class="tag">04 — La plantilla</p>
+      <h2>Úsala. Cópiala. Compártela.</h2>
+
+      <div class="tmpl-box">
+        <p>
+          Estoy intentando <var>[tu objetivo real]</var>.<br>
+          Probé <var>[qué hiciste]</var> pero obtengo <var>[qué pasa]</var>.<br>
+          Pensé que quizás <var>[tu solución propuesta]</var> podría funcionar,<br>
+          pero no sé si es el enfoque correcto.<br>
+          ¿Alguna idea?
+        </p>
+      </div>
+
+      <button class="btn-copy" id="copyBtn" onclick="copyTmpl()">copiar plantilla</button>
+    </section>
+
+  </main>
+
+  <!-- CIERRE -->
+  <div class="closing reveal">
+    <p class="closing-quote">"Nadie nació sabiendo preguntar bien.<br>Pero todos podemos aprender."</p>
+    <p class="closing-sub">La próxima vez que alguien se trabe describiendo su solución en lugar de su problema, comparte este enlace.</p>
+    <button class="btn-share" id="shareBtn" onclick="shareUrl()">
+      compartir preguntabien.com
+    </button>
+  </div>
+
+  <footer>
+    <span class="foot-txt">
+      inspirado en
+      <a class="foot-link" href="https://nohello.net" target="_blank" rel="noopener">nohello.net</a>
+      y
+      <a class="foot-link" href="https://dontasktoask.com" target="_blank" rel="noopener">dontasktoask.com</a>
+      ·
+      <a class="foot-link" href="https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem" target="_blank" rel="noopener">origen del Problema XY</a>
+    </span>
+    <a class="foot-link" href="https://github.com/tuusuario/preguntabien" target="_blank" rel="noopener">github</a>
+  </footer>
+
+</div>
+
+<script>
+  const TEMPLATE = `Estoy intentando [tu objetivo real].
+Probé [qué hiciste] pero obtengo [qué pasa].
+Pensé que quizás [tu solución propuesta] podría funcionar,
+pero no sé si es el enfoque correcto.
+¿Alguna idea?`;
+
+  function copyTmpl() {
+    const btn = document.getElementById('copyBtn');
+    const fallback = () => {
+      const ta = Object.assign(document.createElement('textarea'), { value: TEMPLATE, style: 'position:fixed;opacity:0' });
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    };
+    (navigator.clipboard ? navigator.clipboard.writeText(TEMPLATE) : Promise.reject())
+      .catch(fallback)
+      .finally(() => {
+        btn.textContent = '✓ copiada';
+        btn.classList.add('ok');
+        setTimeout(() => { btn.textContent = 'copiar plantilla'; btn.classList.remove('ok'); }, 2200);
+      });
+  }
+
+  function shareUrl() {
+    const url  = 'https://preguntabien.com';
+    const btn  = document.getElementById('shareBtn');
+    const done = () => {
+      btn.textContent = '✓ enlace copiado';
+      btn.classList.add('ok');
+      setTimeout(() => { btn.textContent = 'compartir preguntabien.com'; btn.classList.remove('ok'); }, 2200);
+    };
+    if (navigator.share) {
+      navigator.share({ title: 'Pregunta bien', text: 'Estás describiendo tu solución. Deberías describir tu problema.', url }).catch(() => {});
+    } else {
+      const fallback = () => {
+        const ta = Object.assign(document.createElement('textarea'), { value: url, style: 'position:fixed;opacity:0' });
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      };
+      (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).catch(fallback).finally(done);
+    }
+  }
+
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }),
+    { threshold: 0.06 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
